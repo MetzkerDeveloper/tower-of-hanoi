@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import AdBanner from "./components/AdBanner";
 import './App.css';
 
 const diskColors = ['#4a90e2', '#e94e77', '#50c878', '#f7b731', '#9b59b6'];
@@ -92,14 +93,7 @@ export default function App() {
       )}
 
       <footer className="ad-footer">
-        <ins
-          className="adsbygoogle"
-          style={{ display: 'block' }}
-          data-ad-client={import.meta.env.VITE_ADSENSE_CLIENT}
-          data-ad-slot={import.meta.env.VITE_ADSENSE_SLOT}
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
+      <AdBanner />
       </footer>
     </div>
   );
