@@ -74,7 +74,7 @@ export default function App() {
                 key={i}
                 className={`disk ${selectedDisk?.disk === disk && selectedDisk?.towerIndex === towerIndex ? 'selected' : ''}`}
                 style={{
-                  width: `${60 + disk * 25}px`,
+                  width: `${40 + (disk / (diskCount - 1)) * 50}%`,
                   background: diskColors[disk % diskColors.length],
                   bottom: `${i * 22}px`
                 }}
