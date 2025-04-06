@@ -1,0 +1,93 @@
+body {
+  background: #f5f5f5;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+button, select {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background: #2d2d2d;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover, select:hover {
+  background: #555;
+}
+
+.moveCount {
+  font-size: 16px;
+  color: #2d2d2d;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.tower {
+  width: 180px;
+  height: 280px;
+  background: transparent;
+  position: relative;
+  border-bottom: 4px solid #2d2d2d;
+  cursor: pointer;
+}
+
+.disk {
+  position: absolute;
+  height: 18px;
+  border-radius: 4px;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 2px solid transparent;
+}
+
+.disk.selected {
+  border: 2px solid #ff6b6b;
+  box-shadow: 0 0 8px rgba(255, 107, 107, 0.5);
+}
+
+.victory {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(45, 45, 45, 0.95);
+  color: white;
+  padding: 20px 40px;
+  border-radius: 8px;
+  font-size: 24px;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.ad-footer {
+  margin-top: auto;
+  padding: 40px 0;
+  text-align: center;
+  background: #e8ecef;
+}
