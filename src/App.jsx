@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import AdBanner from "./components/AdBanner";
+import Footer from './components/Footer';
 import './App.css';
 
 const diskColors = ['#4a90e2', '#e94e77', '#50c878', '#f7b731', '#9b59b6'];
@@ -92,9 +93,10 @@ export default function App() {
         </div>
       )}
 
-      <footer className="ad-footer">
-      <AdBanner />
-      </footer>
+      <div className="ad-footer">
+        <AdBanner />
+      </div>
+        <Footer />
     </div>
   );
 }
