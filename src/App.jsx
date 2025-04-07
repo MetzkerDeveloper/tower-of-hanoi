@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import AdBanner from "./components/AdBanner";
 import Footer from './components/Footer';
+import LoginScreen from './components/LoginScreen';
+import RankingScreen from './components/RankingScreen';
 import './App.css';
 
 const diskColors = ['#4a90e2', '#e94e77', '#50c878', '#f7b731', '#9b59b6'];
@@ -11,6 +13,9 @@ export default function App() {
   const [moveCount, setMoveCount] = useState(0);
   const [diskCount, setDiskCount] = useState(3);
   const [showVictory, setShowVictory] = useState(false);
+  const [playerName, setPlayerName] = useState('');
+  const [gameStarted, setGameStarted] = useState(false);
+  const [showRanking, setShowRanking] = useState(false);
 
   useEffect(() => {
     initGame(diskCount);
@@ -47,12 +52,46 @@ export default function App() {
         setTowers(newTowers);
         setMoveCount(prev => prev + 1);
         if (newTowers[2].length === diskCount) {
+          const newMoveCount = moveCount + 1;
           setShowVictory(true);
-          setTimeout(() => setShowVictory(false), 3000);
+          setTimeout(() => saveGameResult(), 0);
         }
       }
       setSelectedDisk(null);
     }
+  }
+
+  const saveGameResult = async () => {
+    try {
+      const result = {
+        playerName,
+        disks: diskCount,
+        moves: moveCount + 1,
+        date: new Date().toISOString()
+      };
+
+      await fetch('http://localhost:3000/ranking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(result)
+      });
+    } catch (error) {
+      console.error('Erro ao salvar resultado:', error);
+    }
+  };
+
+  const handleStartGame = (name) => {
+    setPlayerName(name);
+    setGameStarted(true);
+    initGame(diskCount);
+  };
+
+
+
+  if (!gameStarted) {
+    return <LoginScreen onStartGame={handleStartGame} />;
   }
 
   return (
@@ -89,14 +128,25 @@ export default function App() {
 
       {showVictory && (
         <div className="victory">
-          Parabéns! Você venceu em {moveCount} movimentos!
+          <h3>Parabéns, {playerName}!</h3>
+          <p>Você completou o desafio com {diskCount} discos em {moveCount} movimentos!</p>
+          <button onClick={() => setShowRanking(true)}>Ver Ranking</button>
+          <button onClick={() => {
+            setShowVictory(false);
+            initGame(diskCount);
+            setMoveCount(0);
+          }}>Continuar Jogando</button>
         </div>
       )}
 
+      <div className="ranking-container">
+        <RankingScreen onBack={() => {}} shouldUpdate={showVictory} />
+      </div>
+      
       <div className="ad-footer">
         <AdBanner />
       </div>
-        <Footer />
+      <Footer />
     </div>
   );
 }
