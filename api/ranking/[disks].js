@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const password = process.env.MONGODB_PASSWORD;
+const password = process.env.VITE_MONGODB_PASSWORD;
 
 const connectDB = async () => {
   if (mongoose.connections[0].readyState) return;
@@ -36,7 +36,9 @@ export default async function handler(req, res) {
     await connectDB();
     const rankings = await Ranking.find({ disks: disksNum })
       .sort({ moves: 1 })
-      .limit(5);
+      .limit(5)
+      .lean()
+      .exec() || [];
     return res.status(200).json(rankings);
   } catch (error) {
     return res.status(500).json({ error: 'Erro ao buscar ranking' });

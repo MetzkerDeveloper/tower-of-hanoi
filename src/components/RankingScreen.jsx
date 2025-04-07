@@ -15,10 +15,14 @@ export default function RankingScreen({ onBack, shouldUpdate }) {
   const fetchRanking = async (disks) => {
     try {
       const response = await fetch(`/api/ranking/${disks}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
-      setRankings(prev => ({ ...prev, [disks]: data }));
+      setRankings(prev => ({ ...prev, [disks]: Array.isArray(data) ? data : [] }));
     } catch (error) {
       console.error('Erro ao buscar ranking:', error);
+      setRankings(prev => ({ ...prev, [disks]: [] }));
     }
   };
 
