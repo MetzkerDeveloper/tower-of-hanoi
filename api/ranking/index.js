@@ -3,11 +3,21 @@ import mongoose from 'mongoose';
 const password = process.env.MONGODB_PASSWORD;
 
 const connectDB = async () => {
-  if (mongoose.connections[0].readyState) return;
-  await mongoose.connect(`mongodb+srv://curso:${password}@curso.thsdz.mongodb.net/torre-hanoi`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
+  try {
+    if (mongoose.connections[0].readyState) return;
+    
+    if (!password) {
+      throw new Error('Variável de ambiente MONGODB_PASSWORD não está definida');
+    }
+
+    await mongoose.connect(`mongodb+srv://curso:${password}@curso.thsdz.mongodb.net/torre-hanoi`, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+  } catch (error) {
+    console.error('Erro ao conectar com MongoDB:', error);
+    throw error;
+  }
 };
 
 const rankingSchema = new mongoose.Schema({
@@ -68,6 +78,7 @@ export default async function handler(req, res) {
     await ranking.save();
     return res.status(201).json(ranking);
   } catch (error) {
-    return res.status(500).json({ error: 'Erro ao salvar ranking' });
+    console.error('Erro ao processar requisição:', error);
+    return res.status(500).json({ error: error.message || 'Erro ao salvar ranking' });
   }
 }
