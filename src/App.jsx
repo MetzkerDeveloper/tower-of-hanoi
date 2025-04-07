@@ -70,7 +70,7 @@ export default function App() {
         date: new Date().toISOString()
       };
 
-      await fetch('http://localhost:3000/ranking', {
+      await fetch('/api/ranking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ export default function RankingScreen({ onBack, shouldUpdate }) {
 
   const fetchRanking = async (disks) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_URL}:3000/ranking/${disks}`);
+      const response = await fetch(`/api/ranking/${disks}`);
       const data = await response.json();
       setRankings(prev => ({ ...prev, [disks]: data }));
     } catch (error) {
