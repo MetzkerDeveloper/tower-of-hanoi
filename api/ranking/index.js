@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
-const password = process.env.MONGODB_PASSWORD;
+const password = process.env.VITE_MONGODB_PASSWORD;
 
 const connectDB = async () => {
   try {
     if (mongoose.connections[0].readyState) return;
     
     if (!password) {
-      throw new Error('Variável de ambiente MONGODB_PASSWORD não está definida');
+      throw new Error('Variável de ambiente VITE_MONGODB_PASSWORD não está definida');
     }
 
     await mongoose.connect(`mongodb+srv://curso:${password}@curso.thsdz.mongodb.net/torre-hanoi`, {
