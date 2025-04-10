@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const password = import.meta.env.VITE_MONGODB_PASSWORD;
+const password = process.env.VITE_MONGODB_PASSWORD;
 
 const connectDB = async () => {
   if (mongoose.connections[0].readyState) return;
